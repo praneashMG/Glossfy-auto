@@ -1,0 +1,892 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light" dir="ltr" class="scroll-smooth w-full overflow-x-hidden">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="description" content="Glossify Auto - Mobile Car Detailing at Your Doorstep. Premium exterior washes, interior detailing, and ceramic coating.">
+    <title>Home 1 | Glossify Auto</title>
+    
+    <link rel="icon" type="image/jpeg" href="Images/growwpark_logo.jpg">
+    
+    <script src="tailwind.js"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        primary: '#1F2937',   // Charcoal 
+                        secondary: '#DC2626', // Red (Accent/CTA)
+                        base: '#000000',      // Black
+                        cream: '#FFFFFF',     // White
+                        warmgray: '#9CA3AF',  // Gray for supportive text
+                        charcoal: '#111827',  // Deep Charcoal
+                        'card-dark': '#1F2937'// Card Dark
+                    },
+                    animation: {
+                        'fadeInUp': 'fadeInUp 0.8s ease-out',
+                        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                    },
+                    keyframes: {
+                        fadeInUp: {
+                            'from': { opacity: '0', transform: 'translateY(20px)' },
+                            'to': { opacity: '1', transform: 'translateY(0)' }
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+        
+        :root {
+            --primary-color: #1F2937; 
+            --secondary-color: #DC2626; 
+            --bg-color: #FFFFFF; 
+            --bg-alt: #F3F4F6; 
+            --card-bg: #FFFFFF;    
+            --text-main: #1F2937; 
+            --text-heading: #000000; 
+            --navbar-bg: #111827; 
+            --border-color: #E5E7EB; 
+        }
+        
+        /* Strictly Black and Dark Grey for Dark Mode */
+        [data-theme="dark"] {
+            --primary-color: #111827;   /* Dark Grey */
+            --secondary-color: #DC2626; /* Red */
+            --bg-color: #000000;        /* Pure Black Background */
+            --bg-alt: #111827;          /* Dark Grey for alternating sections */
+            --card-bg: #1F2937;         /* Charcoal for cards */
+            --text-main: #E5E7EB;       /* Light Grey Text */
+            --text-heading: #FFFFFF;    /* Pure White Headings */
+            --navbar-bg: #000000;       /* Black Navbar */
+            --border-color: #374151;    /* Dark border */
+        }
+        
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        html, body { 
+            overflow-x: hidden !important; 
+            width: 100%; 
+            max-width: 100vw;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+        
+        h1, h2, h3, h4, h5, h6 { color: var(--text-heading); }
+        p, label { color: var(--text-main); }
+        
+        .bg-theme-main { background-color: var(--bg-color); }
+        .bg-theme-alt { background-color: var(--bg-alt); }
+        .bg-card-theme { background-color: var(--card-bg); }
+        
+        .text-heading-theme { color: var(--text-heading); }
+        .text-body-theme { color: var(--text-main); }
+        .border-theme { border-color: var(--border-color); }
+        
+        .bg-primary { background-color: var(--primary-color) !important; color: #FFFFFF !important; } 
+        .bg-secondary { background-color: var(--secondary-color) !important; color: #FFFFFF !important; }
+
+        /* Navbar Styles */
+        .navbar-container {
+            background-color: var(--navbar-bg);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+            transition: background-color 0.3s ease;
+            height: 70px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .nav-link {
+            color: #FFFFFF; 
+            padding: 8px 10px; 
+            transition: all 0.3s ease;
+            position: relative;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            font-weight: 500;
+            white-space: nowrap;
+            cursor: pointer;
+            font-size: 0.85rem;
+        }
+        
+        .nav-link:hover { color: var(--secondary-color); }
+        .nav-link.active { color: var(--secondary-color); font-weight: 600; }
+        
+        /* Dropdowns */
+        .dropdown { position: relative; }
+        .dropdown-menu {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background-color: var(--navbar-bg);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            min-width: 160px;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(10px);
+            transition: all 0.3s ease;
+            z-index: 1000;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+        }
+        
+        #dashboard-dropdown .dropdown-menu { left: auto; right: 0; }
+
+        .dropdown:hover .dropdown-menu, .dropdown.active .dropdown-menu {
+            opacity: 1; visibility: visible; transform: translateY(0);
+        }
+        .dropdown-item {
+            display: block; padding: 12px 20px; color: #FFFFFF;
+            transition: all 0.3s ease; border-bottom: 1px solid rgba(255, 255, 255, 0.05); font-size: 0.9rem;
+            text-decoration: none;
+        }
+        .dropdown-item:hover { background-color: rgba(220, 38, 38, 0.1); color: var(--secondary-color); padding-left: 25px; }
+        .dropdown-arrow { font-size: 0.7rem; transition: transform 0.3s ease; }
+        .dropdown:hover .dropdown-arrow { transform: rotate(180deg); }
+        
+        /* Mobile Menu */
+        .mobile-menu {
+            transform: translateX(-100%); transition: transform 0.3s ease;
+            background-color: var(--navbar-bg); color: #FFFFFF; 
+        }
+        .mobile-menu.active { transform: translateX(0); }
+        
+        .mobile-dropdown-content {
+            max-height: 0; overflow: hidden; transition: max-height 0.3s ease;
+            padding-left: 20px; background-color: rgba(255,255,255,0.05); border-radius: 8px;
+        }
+        .mobile-dropdown-content a { color: #E5E7EB; text-decoration: none;} 
+        .mobile-dropdown-content a:hover { color: var(--secondary-color); }
+        .mobile-dropdown-content.active { max-height: 500px; margin: 5px 0; }
+        
+        @media (max-width: 1279px) {
+            .desktop-nav, .navbar-right-desktop { display: none !important; }
+            .mobile-menu-button { display: flex !important; }
+        }
+        @media (min-width: 1280px) {
+            .desktop-nav, .navbar-right-desktop { display: flex !important; }
+            .mobile-menu-button { display: none !important; }
+        }
+
+        /* Form Controls */
+        .search-input {
+            background-color: transparent;
+            border: none;
+            color: var(--text-main);
+            font-weight: 500;
+            width: 100%;
+            outline: none;
+        }
+        .search-input::placeholder { color: var(--text-main); opacity: 0.7; }
+        
+        .glass-input {
+            background-color: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            color: white;
+        }
+        .glass-input::placeholder { color: rgba(255,255,255,0.5); }
+        .glass-input option { color: black; }
+
+        /* Slider Custom Track - Increased Size */
+        input[type=range]::-webkit-slider-thumb {
+            pointer-events: all;
+            width: 48px;
+            height: 48px;
+            -webkit-appearance: none;
+            @apply bg-secondary rounded-full shadow-xl;
+        }
+    </style>
+</head>
+<body class="w-full overflow-x-hidden m-0 p-0 antialiased bg-theme-main text-body-theme">
+
+    <div class="relative w-full max-w-full overflow-x-hidden flex flex-col min-h-screen">
+        
+        <nav id="navbar" class="navbar-container fixed top-0 inset-x-0 z-[1000]">
+            <div class="container mx-auto px-4 w-full">
+                <div class="flex items-center justify-between">
+                    
+                    <a href="index.html" class="flex items-center gap-3 no-underline transition-transform duration-300 hover:scale-105 group">
+                        <div class="relative w-10 h-10 bg-black rounded-lg flex items-center justify-center shrink-0 border-2 border-secondary overflow-hidden">
+                            <i class="fas fa-car text-white text-lg"></i>
+                        </div>
+                        <div>
+                            <div class="text-xl md:text-2xl font-black text-white tracking-tight">Glossify<span class="text-secondary">Auto</span></div>
+                        </div>
+                    </a>
+                    
+                    <div class="desktop-nav items-center space-x-0 xl:space-x-1 hidden xl:flex">
+                        <div class="dropdown" id="home-dropdown">
+                            <div class="nav-link active" onclick="toggleDesktopDropdown('home-dropdown')">
+                                Home <i class="fas fa-chevron-down dropdown-arrow"></i>
+                            </div>
+                            <div class="dropdown-menu">
+                                <a href="index.html" class="dropdown-item">Home 1</a>
+                                <a href="home-2.html" class="dropdown-item">Home 2</a>
+                            </div>
+                        </div>
+                        <a href="about.html" class="nav-link">About</a>
+                        <a href="product.html" class="nav-link">Product</a>
+                        <a href="blog.html" class="nav-link">Blog</a>
+                        <a href="pricing.html" class="nav-link">Pricing</a>
+                        <a href="faq.html" class="nav-link">FAQ</a>
+                        <a href="contact.html" class="nav-link">Contact</a>
+
+                        <div class="dropdown" id="dashboard-dropdown">
+                            <div class="nav-link" onclick="toggleDesktopDropdown('dashboard-dropdown')">
+                                Dashboard <i class="fas fa-chevron-down dropdown-arrow"></i>
+                            </div>
+                            <div class="dropdown-menu">
+                                <a href="user-dashboard.html" class="dropdown-item">User</a>
+                                <a href="admin-dashboard.html" class="dropdown-item">Admin</a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="navbar-right-desktop flex items-center gap-2 lg:gap-3 shrink-0">
+                        <button class="w-10 h-10 bg-white text-primary rounded-lg flex items-center justify-center transition-all duration-300 hover:bg-secondary hover:text-white shrink-0 border-0 cursor-pointer shadow-md" id="desktop-theme-toggle-btn" title="Toggle Dark Mode">
+                            <i class="fas fa-circle-half-stroke" id="desktop-theme-icon"></i>
+                        </button>
+                        <button class="w-10 h-10 bg-white text-primary rounded-lg flex items-center justify-center transition-all duration-300 hover:bg-secondary hover:text-white shrink-0 border-0 cursor-pointer shadow-md" id="desktop-rtl-toggle-btn" title="Toggle RTL">
+                            <i class="fas fa-right-left"></i>
+                        </button>
+                        
+                        <a href="login.html" class="bg-transparent border-2 border-white/40 text-white px-4 py-2 rounded-lg font-bold text-sm transition-all hover:bg-white/20 hover:border-white/60 shadow-sm flex items-center justify-center gap-2 min-w-[120px] shrink-0 no-underline">
+                            <i class="fas fa-sign-in-alt"></i> Login
+                        </a>
+                        <a href="login.html?mode=signup" class="bg-secondary text-white border-2 border-secondary px-4 py-2 rounded-lg font-bold text-sm transition-all hover:bg-white hover:border-white hover:text-primary shadow-lg hover:shadow-xl flex items-center justify-center gap-2 min-w-[120px] shrink-0 no-underline">
+                            <i class="fas fa-user-plus"></i> Register
+                        </a>
+                    </div>
+                    
+                    <button id="mobile-menu-btn" class="hidden text-white cursor-pointer bg-transparent border-0 mobile-menu-button items-center justify-center h-10 w-10 group relative hover:text-secondary transition-colors">
+                        <i class="fas fa-bars text-2xl"></i>
+                    </button>
+                </div>
+            </div>
+        </nav>
+        
+        <div id="mobile-menu" class="mobile-menu fixed inset-0 z-[9999] overflow-y-auto">
+            <div class="p-4 sm:p-6">
+                <div class="flex flex-wrap justify-between items-center mb-8 gap-3">
+                    <a href="index.html" class="flex items-center gap-2 no-underline">
+                        <div class="relative w-10 h-10 bg-black rounded-lg flex items-center justify-center shrink-0 border-2 border-secondary overflow-hidden">
+                            <i class="fas fa-car text-white"></i>
+                        </div>
+                        <div>
+                            <div class="text-lg md:text-2xl font-black text-white tracking-tight">Glossify<span class="text-secondary">Auto</span></div>
+                        </div>
+                    </a>
+                    
+                    <div class="flex items-center bg-gray-800 rounded-lg px-2 py-1 shadow-md border border-white/10">
+                        <button id="mobile-theme-toggle" class="w-9 h-9 sm:w-10 sm:h-10 text-white flex items-center justify-center text-base sm:text-lg transition-all hover:text-secondary border-0 cursor-pointer bg-transparent">
+                            <i class="fas fa-circle-half-stroke" id="mobile-theme-icon"></i>
+                        </button>
+                        <button id="mobile-rtl-toggle" class="w-9 h-9 sm:w-10 sm:h-10 text-white flex items-center justify-center text-base sm:text-lg transition-all hover:text-secondary border-0 cursor-pointer bg-transparent">
+                            <i class="fas fa-right-left"></i>
+                        </button>
+                        <button id="close-mobile-menu" class="w-9 h-9 sm:w-10 sm:h-10 text-white flex items-center justify-center text-xl sm:text-2xl transition-transform active:scale-90 border-0 cursor-pointer bg-transparent hover:text-secondary">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="space-y-1">
+                    <div>
+                        <button id="mobile-home-btn" class="flex items-center justify-between w-full text-secondary font-bold text-lg py-3 px-2 no-underline cursor-pointer border-0 bg-transparent hover:text-white transition-colors" onclick="toggleMobileDropdown('home-mobile')">
+                            <span>Home</span>
+                            <i class="fas fa-chevron-down dropdown-arrow text-warmgray"></i>
+                        </button>
+                        <div id="home-mobile" class="mobile-dropdown-content">
+                            <a href="index.html" class="block py-2.5">Home 1</a>
+                            <a href="home-2.html" class="block py-2.5">Home 2</a>
+                        </div>
+                    </div>
+                    
+                    <a href="about.html" class="flex items-center justify-between w-full text-white text-lg font-medium py-3 px-2 no-underline border-b border-white/10 hover:text-secondary transition-colors"><span>About</span></a>
+                    <a href="product.html" class="flex items-center justify-between w-full text-white text-lg font-medium py-3 px-2 no-underline border-b border-white/10 hover:text-secondary transition-colors"><span>Product</span></a>
+                    <a href="blog.html" class="flex items-center justify-between w-full text-white text-lg font-medium py-3 px-2 no-underline border-b border-white/10 hover:text-secondary transition-colors"><span>Blog</span></a>
+                    <a href="pricing.html" class="flex items-center justify-between w-full text-white text-lg font-medium py-3 px-2 no-underline border-b border-white/10 hover:text-secondary transition-colors"><span>Pricing</span></a>
+                    <a href="faq.html" class="flex items-center justify-between w-full text-white text-lg font-medium py-3 px-2 no-underline border-b border-white/10 hover:text-secondary transition-colors"><span>FAQ</span></a>
+                    <a href="contact.html" class="flex items-center justify-between w-full text-white text-lg font-medium py-3 px-2 no-underline border-b border-white/10 hover:text-secondary transition-colors"><span>Contact</span></a>
+                    
+                    <div class="mt-2">
+                        <button class="flex items-center justify-between w-full text-white text-lg font-medium py-3 px-2 no-underline cursor-pointer border-0 bg-transparent hover:text-secondary transition-colors" onclick="toggleMobileDropdown('dashboard-mobile')">
+                            <span>Dashboard</span>
+                            <i class="fas fa-chevron-down dropdown-arrow text-warmgray"></i>
+                        </button>
+                        <div id="dashboard-mobile" class="mobile-dropdown-content">
+                            <a href="user-dashboard.html" class="block py-2.5">User</a>
+                            <a href="admin-dashboard.html" class="block py-2.5">Admin</a>
+                        </div>
+                    </div>
+
+                    <div class="mt-8 pt-6 border-t border-white/10 space-y-3">
+                        <a href="login.html" class="bg-transparent border-2 border-white/30 text-white w-full py-3 rounded-xl font-bold text-lg transition-all hover:bg-white/10 hover:border-white/50 flex items-center justify-center gap-2 no-underline">
+                            <i class="fas fa-sign-in-alt"></i> Login
+                        </a>
+                        <a href="login.html?mode=signup" class="bg-secondary border-2 border-secondary text-white w-full py-3 rounded-xl font-bold text-lg transition-all hover:bg-white hover:border-white hover:text-primary flex items-center justify-center gap-2 shadow-lg no-underline">
+                            <i class="fas fa-user-plus"></i> Register
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <main class="w-full flex-grow">
+            
+            <section class="h-[100dvh] w-full flex relative overflow-hidden bg-primary pt-[70px]">
+                <div class="absolute inset-0 z-0 pt-[70px]"> 
+                    <img src="Images/hero1home.jpg" alt="Sleek Black Car" class="w-full h-full object-cover object-center">
+                    <div class="absolute inset-0 bg-gradient-to-r from-black/90 via-black/80 to-black/50"></div>
+                </div>
+                
+                <div class="container mx-auto px-4 z-10 flex flex-col lg:flex-row items-center justify-between w-full h-full pb-10 gap-6 lg:gap-10">
+                    
+                    <div class="w-full lg:w-1/2 text-left animate-fadeInUp mt-4 lg:mt-0">
+                        <div class="inline-block bg-secondary text-white px-4 py-1 rounded-full text-xs sm:text-sm font-bold tracking-wider uppercase mb-4 sm:mb-6 shadow-lg">
+                            <i class="fas fa-map-marker-alt mr-2"></i> We come to you
+                        </div>
+                        <h1 class="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black text-white mb-4 sm:mb-6 leading-tight drop-shadow-lg">
+                            Mobile Car Detailing <br> at Your <span class="text-secondary">Doorstep</span>
+                        </h1>
+                        <p class="text-base sm:text-lg md:text-xl text-gray-300 max-w-lg leading-relaxed font-medium mb-6 sm:mb-10 border-l-4 border-secondary pl-4 sm:pl-6 hidden sm:block">
+                            Experience the ultimate shine without leaving your home. Professional exterior restoration, deep interior detailing, and advanced ceramic coating.
+                        </p>
+                    </div>
+                    
+                    <div class="w-full lg:w-[450px] animate-fadeInUp" style="animation-delay: 0.2s;">
+                        <div class="bg-white/10 backdrop-blur-xl border border-white/20 p-6 sm:p-8 rounded-3xl shadow-[0_8px_32px_0_rgba(0,0,0,0.5)] relative overflow-hidden">
+                            <div class="absolute -top-20 -right-20 w-40 h-40 bg-secondary rounded-full blur-[80px] opacity-40 pointer-events-none"></div>
+                            
+                            <h3 class="text-xl sm:text-2xl font-bold text-white mb-4 sm:mb-6 relative z-10 text-center">Book Your Shine</h3>
+                            
+                            <form class="space-y-4 sm:space-y-5 relative z-10">
+                                <div>
+                                    <label class="block text-[10px] sm:text-xs font-bold text-gray-300 mb-1 sm:mb-2 uppercase tracking-wide">Your Location</label>
+                                    <div class="relative">
+                                        <i class="fas fa-location-dot absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+                                        <input type="text" class="w-full glass-input rounded-xl py-2.5 sm:py-3 pl-12 pr-4 outline-none focus:ring-2 focus:ring-secondary transition-all text-sm" placeholder="Enter Zip Code or City">
+                                    </div>
+                                </div>
+                                
+                                <div>
+                                    <label class="block text-[10px] sm:text-xs font-bold text-gray-300 mb-1 sm:mb-2 uppercase tracking-wide">Vehicle Type</label>
+                                    <div class="relative">
+                                        <i class="fas fa-car absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+                                        <select class="w-full glass-input rounded-xl py-2.5 sm:py-3 pl-12 pr-4 outline-none focus:ring-2 focus:ring-secondary transition-all cursor-pointer appearance-none text-sm">
+                                            <option value="" disabled selected>Select Vehicle Size</option>
+                                            <option value="sedan">Coupe / Sedan</option>
+                                            <option value="suv">Mid-size SUV / Truck</option>
+                                            <option value="large">Large SUV / Minivan</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div>
+                                    <label class="block text-[10px] sm:text-xs font-bold text-gray-300 mb-1 sm:mb-2 uppercase tracking-wide">Service Required</label>
+                                    <div class="relative">
+                                        <i class="fas fa-sparkles absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+                                        <select class="w-full glass-input rounded-xl py-2.5 sm:py-3 pl-12 pr-4 outline-none focus:ring-2 focus:ring-secondary transition-all cursor-pointer appearance-none text-sm">
+                                            <option value="" disabled selected>Select Service</option>
+                                            <option value="exterior">Exterior Wash</option>
+                                            <option value="interior">Full Interior Detail</option>
+                                            <option value="ceramic">Ceramic Coating</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                
+                                <button type="button" class="w-full bg-secondary text-white py-3 sm:py-4 rounded-xl font-black text-base sm:text-lg transition-all hover:bg-white hover:text-primary shadow-lg mt-2 sm:mt-4 flex justify-center items-center gap-2">
+                                    Get Instant Quote <i class="fas fa-arrow-right"></i>
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                    
+                </div>
+            </section>
+
+            <section id="services" class="py-20 md:py-32 bg-theme-alt border-b border-theme relative z-20">
+                <div class="container mx-auto max-w-7xl px-4">
+                    <div class="text-center mb-16">
+                        <h2 class="text-3xl md:text-5xl font-black text-heading-theme mb-4">Our Premium Services</h2>
+                        <p class="text-secondary text-lg font-bold max-w-2xl mx-auto uppercase tracking-wide">Meticulous attention to detail to restore and protect your vehicle.</p>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
+                        <div class="bg-card-theme p-10 rounded-3xl shadow-sm border border-theme hover:border-secondary transition-colors group text-center">
+                            <div class="w-20 h-20 bg-primary/5 dark:bg-white/5 rounded-full flex items-center justify-center text-primary dark:text-white text-3xl mx-auto mb-6 group-hover:bg-secondary group-hover:text-white transition-colors">
+                                <i class="fas fa-shower"></i>
+                            </div>
+                            <h3 class="text-2xl font-bold text-heading-theme mb-4">Exterior Wash & Wax</h3>
+                            <p class="text-body-theme font-medium leading-relaxed">Hand wash, clay bar treatment, iron decontamination, and a premium carnauba wax or sealant application for a mirror finish.</p>
+                        </div>
+
+                        <div class="bg-card-theme p-10 rounded-3xl shadow-sm border border-theme hover:border-secondary transition-colors group text-center">
+                            <div class="w-20 h-20 bg-primary/5 dark:bg-white/5 rounded-full flex items-center justify-center text-primary dark:text-white text-3xl mx-auto mb-6 group-hover:bg-secondary group-hover:text-white transition-colors">
+                                <i class="fas fa-couch"></i>
+                            </div>
+                            <h3 class="text-2xl font-bold text-heading-theme mb-4">Interior Detailing</h3>
+                            <p class="text-body-theme font-medium leading-relaxed">Deep extraction shampooing, leather conditioning, steam cleaning, and meticulous crevice cleaning to make your cabin feel brand new.</p>
+                        </div>
+
+                        <div class="bg-card-theme p-10 rounded-3xl shadow-sm border border-theme hover:border-secondary transition-colors group text-center">
+                            <div class="w-20 h-20 bg-primary/5 dark:bg-white/5 rounded-full flex items-center justify-center text-primary dark:text-white text-3xl mx-auto mb-6 group-hover:bg-secondary group-hover:text-white transition-colors">
+                                <i class="fas fa-shield-alt"></i>
+                            </div>
+                            <h3 class="text-2xl font-bold text-heading-theme mb-4">Ceramic Coating</h3>
+                            <p class="text-body-theme font-medium leading-relaxed">Long-lasting nano-ceramic protection. Defends against UV rays, bird droppings, and scratches while providing extreme water beading.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="how-it-works" class="py-20 md:py-32 bg-theme-main border-b border-theme relative z-20">
+                <div class="container mx-auto max-w-7xl px-4">
+                    <div class="text-center mb-16">
+                        <h2 class="text-3xl md:text-5xl font-black text-heading-theme mb-4">How It Works</h2>
+                        <p class="text-secondary text-lg font-bold max-w-2xl mx-auto uppercase tracking-wide">We make keeping your car pristine effortless.</p>
+                    </div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 relative">
+                        <div class="hidden lg:block absolute top-12 left-[12%] right-[12%] h-1 border-t-2 border-dashed border-gray-300 dark:border-gray-700 z-0"></div>
+
+                        <div class="relative z-10 flex flex-col items-center group text-center">
+                            <div class="w-24 h-24 bg-card-theme border-2 border-primary dark:border-white rounded-full flex items-center justify-center text-primary dark:text-white text-3xl mb-6 shadow-lg group-hover:bg-secondary group-hover:border-secondary group-hover:text-white transition-all duration-300">
+                                <i class="fas fa-calendar-check"></i>
+                            </div>
+                            <h3 class="text-xl font-bold mb-3 text-heading-theme">1. Book</h3>
+                            <p class="text-body-theme text-sm font-medium">Select your package, choose a date, and book online in seconds via your Dashboard.</p>
+                        </div>
+
+                        <div class="relative z-10 flex flex-col items-center group text-center">
+                            <div class="w-24 h-24 bg-card-theme border-2 border-primary dark:border-white rounded-full flex items-center justify-center text-primary dark:text-white text-3xl mb-6 shadow-lg group-hover:bg-secondary group-hover:border-secondary group-hover:text-white transition-all duration-300">
+                                <i class="fas fa-truck"></i>
+                            </div>
+                            <h3 class="text-xl font-bold mb-3 text-heading-theme">2. We Arrive</h3>
+                            <p class="text-body-theme text-sm font-medium">Our fully-equipped mobile detailing unit arrives at your home or office.</p>
+                        </div>
+
+                        <div class="relative z-10 flex flex-col items-center group text-center">
+                            <div class="w-24 h-24 bg-card-theme border-2 border-primary dark:border-white rounded-full flex items-center justify-center text-primary dark:text-white text-3xl mb-6 shadow-lg group-hover:bg-secondary group-hover:border-secondary group-hover:text-white transition-all duration-300">
+                                <i class="fas fa-tools"></i>
+                            </div>
+                            <h3 class="text-xl font-bold mb-3 text-heading-theme">3. Service</h3>
+                            <p class="text-body-theme text-sm font-medium">We meticulously clean, polish, and protect your vehicle using top-tier products.</p>
+                        </div>
+
+                        <div class="relative z-10 flex flex-col items-center group text-center">
+                            <div class="w-24 h-24 bg-card-theme border-2 border-primary dark:border-white rounded-full flex items-center justify-center text-primary dark:text-white text-3xl mb-6 shadow-lg group-hover:bg-secondary group-hover:border-secondary group-hover:text-white transition-all duration-300">
+                                <i class="fas fa-star"></i>
+                            </div>
+                            <h3 class="text-xl font-bold mb-3 text-heading-theme">4. Shine</h3>
+                            <p class="text-body-theme text-sm font-medium">Step outside to a showroom-ready car and drive with absolute confidence.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="showcase" class="py-20 md:py-32 bg-theme-alt border-b border-theme">
+                <div class="container mx-auto px-4 max-w-6xl text-center">
+                    <div class="text-center mb-16">
+                        <h2 class="text-3xl md:text-5xl font-black text-heading-theme mb-4">See The Difference</h2>
+                        <p class="text-secondary text-lg font-bold max-w-2xl mx-auto uppercase tracking-wide">Drag the slider to reveal the Glossify Auto transformation.</p>
+                    </div>
+                    
+                    <div class="relative w-full max-w-4xl mx-auto h-[300px] md:h-[500px] rounded-2xl overflow-hidden shadow-2xl group border-4 border-white dark:border-gray-800">
+                        <img src="Images/after.jpg" class="absolute inset-0 w-full h-full object-cover" alt="Shiny clean car - After">
+                        
+                        <div id="before-image-container" class="absolute inset-0 w-1/2 h-full overflow-hidden border-r-4 border-secondary pointer-events-none">
+                            <img src="Images/before.jpg" class="absolute top-0 left-0 w-[100vw] max-w-[896px] h-full object-cover" style="width: var(--container-width);" id="before-img-inner" alt="Dirty car - Before">
+                        </div>
+                        
+                        <input type="range" min="0" max="100" value="50" class="absolute inset-0 w-full h-full opacity-0 cursor-ew-resize z-10" id="comparison-slider">
+                        
+                        <div class="absolute top-4 left-4 bg-black/80 text-white px-4 py-2 rounded font-bold pointer-events-none shadow-md z-0 text-sm tracking-wider uppercase">Before</div>
+                        <div class="absolute top-4 right-4 bg-secondary text-white px-4 py-2 rounded font-bold pointer-events-none shadow-md z-0 text-sm tracking-wider uppercase">After</div>
+                        
+                        <div id="slider-handle" class="absolute top-0 bottom-0 left-1/2 w-1 bg-transparent pointer-events-none flex items-center justify-center transform -translate-x-1/2 z-0">
+                            <div class="w-12 h-12 text-lg bg-secondary rounded-full flex items-center justify-center text-white shadow-[0_0_15px_rgba(0,0,0,0.5)]">
+                                <i class="fas fa-arrows-left-right"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="advantage" class="py-20 md:py-32 bg-primary border-b border-theme relative overflow-hidden">
+                <div class="absolute top-0 left-0 w-full h-full opacity-10 pointer-events-none" style="background-image: radial-gradient(circle at 20% 50%, #DC2626 0%, transparent 50%);"></div>
+                
+                <div class="container mx-auto max-w-7xl px-4 relative z-10">
+                    <div class="text-center mb-16">
+                        <h2 class="text-3xl md:text-5xl font-black text-white mb-4">The Glossify Advantage</h2>
+                        <p class="text-secondary text-lg font-bold max-w-2xl mx-auto uppercase tracking-wide">Next-generation auto care technology.</p>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 auto-rows-[250px]">
+                        
+                        <div class="md:col-span-2 md:row-span-2 bg-charcoal rounded-3xl p-8 border border-white/10 relative overflow-hidden group">
+                            <div class="absolute inset-0 z-0">
+                                <img src="Images/The Glossify Advantage.jpg" class="w-full h-full object-cover opacity-40 group-hover:scale-105 transition-transform duration-700" alt="Glossify Advantage">
+                                <div class="absolute inset-0 bg-gradient-to-t from-charcoal via-charcoal/50 to-transparent"></div>
+                            </div>
+                            <div class="relative z-10 h-full flex flex-col justify-end">
+                                <div class="w-12 h-12 bg-secondary rounded-full flex items-center justify-center text-white mb-4 shadow-lg">
+                                    <i class="fas fa-shield-virus text-xl"></i>
+                                </div>
+                                <h3 class="text-3xl font-black text-white mb-2">9H Ceramic Armor</h3>
+                                <p class="text-gray-300 font-medium max-w-md">Our liquid polymer coating bonds at the molecular level, creating a permanent shield against scratches, UV damage, and chemical stains.</p>
+                            </div>
+                        </div>
+
+                        <div class="bg-charcoal rounded-3xl p-8 border border-white/10 flex flex-col justify-center relative overflow-hidden group hover:border-secondary/50 transition-colors">
+                            <i class="fas fa-droplet text-secondary text-4xl mb-4"></i>
+                            <h3 class="text-xl font-bold text-white mb-2">Extreme Hydrophobicity</h3>
+                            <p class="text-gray-400 text-sm font-medium">Watch water, mud, and grime bead up and roll right off your paintwork, making future washes effortless.</p>
+                        </div>
+
+                        <div class="bg-charcoal rounded-3xl p-8 border border-white/10 flex flex-col justify-center relative overflow-hidden group hover:border-secondary/50 transition-colors">
+                            <i class="fas fa-temperature-arrow-down text-secondary text-4xl mb-4"></i>
+                            <h3 class="text-xl font-bold text-white mb-2">UV Resistance</h3>
+                            <p class="text-gray-400 text-sm font-medium">Prevents your vehicle’s paint from oxidizing, preventing fading and keeping the showroom shine intact.</p>
+                        </div>
+
+                        <div class="md:col-span-3 bg-secondary rounded-3xl p-8 flex flex-col md:flex-row items-center justify-between shadow-[0_10px_30px_rgba(220,38,38,0.3)]">
+                            <div class="mb-6 md:mb-0 text-center md:text-left">
+                                <h3 class="text-2xl md:text-3xl font-black text-white mb-2">Self-Sufficient Mobile Units</h3>
+                                <p class="text-white/90 font-medium text-lg">We bring our own spot-free water and silent generators. Zero hassle for you.</p>
+                            </div>
+                            <button class="bg-white text-primary px-8 py-4 rounded-xl font-black text-lg hover:bg-gray-100 transition-colors shadow-lg shrink-0 whitespace-nowrap">
+                                Discover More <i class="fas fa-arrow-right ml-2"></i>
+                            </button>
+                        </div>
+
+                    </div>
+                </div>
+            </section>
+
+            <section id="reviews" class="py-20 md:py-32 bg-theme-alt border-b border-theme">
+                <div class="container mx-auto px-4 max-w-7xl">
+                    <div class="text-center mb-16">
+                        <h2 class="text-3xl md:text-5xl font-black text-heading-theme mb-4">Five-Star Finishes</h2>
+                        <p class="text-secondary text-lg font-bold max-w-2xl mx-auto uppercase tracking-wide">Read what our clients say about their Glossify Auto experience.</p>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                        <div class="bg-card-theme p-8 rounded-3xl border border-theme shadow-sm relative flex flex-col h-full hover:shadow-lg transition-shadow">
+                            <div class="flex text-secondary text-sm mb-4 shrink-0">
+                                <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                            </div>
+                            <p class="text-body-theme font-medium italic mb-6 flex-grow">"Absolutely incredible service! I booked the Full Detail while I was working from home. I stepped out to a car that looked better than the day I bought it from the dealership."</p>
+                            <div class="mt-auto shrink-0 flex items-center gap-4">
+                                <div class="w-10 h-10 bg-gray-200 rounded-full flex items-center justify-center text-primary font-bold">JD</div>
+                                <div>
+                                    <h4 class="font-bold text-heading-theme text-sm">James D.</h4>
+                                    <p class="text-xs text-warmgray">Full Detail — Tesla Model 3</p>
+                                </div>
+                            </div>
+                            <i class="fas fa-quote-right absolute top-8 right-8 text-4xl text-primary opacity-5 dark:opacity-20"></i>
+                        </div>
+
+                        <div class="bg-card-theme p-8 rounded-3xl border border-theme shadow-sm relative flex flex-col h-full hover:shadow-lg transition-shadow">
+                            <div class="flex text-secondary text-sm mb-4 shrink-0">
+                                <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                            </div>
+                            <p class="text-body-theme font-medium italic mb-6 flex-grow">"The Ceramic Coating package is worth every penny. The team was professional, explained the whole process, and now water just flies off my truck. Highly recommend Glossify Auto."</p>
+                            <div class="mt-auto shrink-0 flex items-center gap-4">
+                                <div class="w-10 h-10 bg-gray-200 rounded-full flex items-center justify-center text-primary font-bold">MR</div>
+                                <div>
+                                    <h4 class="font-bold text-heading-theme text-sm">Marcus R.</h4>
+                                    <p class="text-xs text-warmgray">Ceramic Coating — Ford F-150</p>
+                                </div>
+                            </div>
+                            <i class="fas fa-quote-right absolute top-8 right-8 text-4xl text-primary opacity-5 dark:opacity-20"></i>
+                        </div>
+
+                        <div class="bg-card-theme p-8 rounded-3xl border border-theme shadow-sm relative flex flex-col h-full hover:shadow-lg transition-shadow">
+                            <div class="flex text-secondary text-sm mb-4 shrink-0">
+                                <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                            </div>
+                            <p class="text-body-theme font-medium italic mb-6 flex-grow">"So convenient! I love that I can book directly through my dashboard, track my service history, and have them come straight to my office. The interior smells brand new."</p>
+                            <div class="mt-auto shrink-0 flex items-center gap-4">
+                                <div class="w-10 h-10 bg-gray-200 rounded-full flex items-center justify-center text-primary font-bold">SK</div>
+                                <div>
+                                    <h4 class="font-bold text-heading-theme text-sm">Sarah K.</h4>
+                                    <p class="text-xs text-warmgray">Standard Wash — BMW X5</p>
+                                </div>
+                            </div>
+                            <i class="fas fa-quote-right absolute top-8 right-8 text-4xl text-primary opacity-5 dark:opacity-20"></i>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="py-16 bg-primary border-y border-white/10 relative z-10">
+                <div class="container mx-auto px-4 max-w-7xl">
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center divide-x-0 md:divide-x divide-white/20">
+                        <div class="mb-4 md:mb-0">
+                            <h3 class="text-4xl md:text-5xl font-black text-white mb-2">50+</h3>
+                            <p class="text-gray-300 font-medium">Certified Detailers</p>
+                        </div>
+                        <div class="mb-4 md:mb-0 border-l border-white/20 md:border-none pl-4 md:pl-0">
+                            <h3 class="text-4xl md:text-5xl font-black text-white mb-2">10k+</h3>
+                            <p class="text-gray-300 font-medium">Cars Detailed</p>
+                        </div>
+                        <div class="pt-4 md:pt-0 border-t md:border-t-0 border-white/20 md:border-l pl-0 md:pl-4">
+                            <h3 class="text-4xl md:text-5xl font-black text-white mb-2">30</h3>
+                            <p class="text-gray-300 font-medium">Service Areas</p>
+                        </div>
+                        <div class="pt-4 md:pt-0 border-t border-l border-white/20 md:border-t-0 pl-4">
+                            <h3 class="text-4xl md:text-5xl font-black text-white mb-2">4.9</h3>
+                            <p class="text-gray-300 font-medium">Average Rating</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+        </main>
+
+        <footer class="bg-[#0A0F16] py-12 md:py-16 shrink-0 relative border-t border-white/10">
+            <div class="container mx-auto px-4">
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 md:gap-12 mb-12">
+                    <div class="text-center sm:text-left">
+                        <a href="index.html" class="flex items-center justify-center sm:justify-start gap-3 mb-6 no-underline">
+                            <div class="relative w-10 h-10 bg-black rounded-lg flex items-center justify-center shrink-0 border-2 border-secondary overflow-hidden">
+                                <i class="fas fa-car text-white"></i>
+                            </div>
+                            <div>
+                                <span class="text-xl md:text-2xl font-bold text-white block">Glossify<span class="text-secondary">Auto</span></span>
+                            </div>
+                        </a>
+                        <p class="text-gray-400 mb-6 font-medium text-sm">Premium mobile car detailing and ceramic coating delivered directly to your home or office.</p>
+                        <div class="flex justify-center sm:justify-start space-x-3 sm:space-x-4">
+                            <a href="#" class="w-10 h-10 bg-white/10 text-white rounded-full flex items-center justify-center hover:bg-secondary transition shadow-sm"><i class="fab fa-instagram"></i></a>
+                            <a href="#" class="w-10 h-10 bg-white/10 text-white rounded-full flex items-center justify-center hover:bg-secondary transition shadow-sm"><i class="fab fa-facebook-f"></i></a>
+                            <a href="#" class="w-10 h-10 bg-white/10 text-white rounded-full flex items-center justify-center hover:bg-secondary transition shadow-sm"><i class="fab fa-tiktok"></i></a>
+                        </div>
+                    </div>
+                    
+                    <div class="text-center sm:text-left">
+                        <h3 class="text-xl font-bold mb-6 text-white">Services</h3>
+                        <ul class="space-y-4 text-base">
+                            <li><a href="#" class="text-gray-400 hover:text-white transition font-medium no-underline">Exterior Wash</a></li>
+                            <li><a href="#" class="text-gray-400 hover:text-white transition font-medium no-underline">Interior Detailing</a></li>
+                            <li><a href="#" class="text-gray-400 hover:text-white transition font-medium no-underline">Ceramic Coating</a></li>
+                            <li><a href="#" class="text-gray-400 hover:text-white transition font-medium no-underline">Paint Correction</a></li>
+                        </ul>
+                    </div>
+                    
+                    <div class="text-center sm:text-left">
+                        <h3 class="text-xl font-bold mb-6 text-white">Company</h3>
+                        <ul class="space-y-4 text-base">
+                            <li><a href="index.html" class="text-gray-400 hover:text-white transition font-medium no-underline">Home</a></li>
+                            <li><a href="blog.html" class="text-gray-400 hover:text-white transition font-medium no-underline">Blog</a></li>
+                            <li><a href="pricing.html" class="text-gray-400 hover:text-white transition font-medium no-underline">Pricing</a></li>
+                            <li><a href="#contact" class="text-gray-400 hover:text-white transition font-medium no-underline">Contact</a></li>
+                        </ul>
+                    </div>
+                    
+                    <div class="text-center sm:text-left">
+                        <h3 class="text-xl font-bold mb-4 text-white">Join the VIP Club</h3>
+                        <p class="text-gray-400 mb-6 text-base font-medium leading-relaxed">Subscribe for car care tips and exclusive monthly discounts.</p>
+                        <form class="flex flex-col gap-3">
+                            <input type="email" placeholder="Your email" class="w-full px-4 py-3 rounded-lg bg-white/5 border border-white/10 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-secondary font-medium shadow-sm text-center sm:text-left" required>
+                            <button type="submit" class="w-full bg-secondary text-white px-4 py-3 rounded-lg font-bold hover:bg-white hover:text-primary transition shadow-sm">
+                                Subscribe
+                            </button>
+                        </form>
+                    </div>
+                </div>
+                
+                <div class="border-t border-white/10 pt-8 flex flex-col md:flex-row justify-between items-center text-sm font-medium relative text-center sm:text-left">
+                    <p class="mb-4 md:mb-0 text-gray-400">© 2026 Glossify Auto. All rights reserved.</p>
+                    
+                    <div class="flex justify-center sm:justify-end gap-6 w-full md:w-auto">
+                        <a href="#" class="text-gray-400 hover:text-white transition no-underline">Privacy Policy</a>
+                        <a href="#" class="text-gray-400 hover:text-white transition no-underline">Terms of Service</a>
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <button id="scroll-top" class="fixed bottom-6 right-6 md:bottom-8 md:right-8 w-10 h-10 md:w-12 md:h-12 bg-secondary text-white rounded-full shadow-lg hidden hover:bg-white hover:text-primary transition z-50">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <script>
+        // --- THEME & RTL LOGIC ---
+        const desktopThemeToggleBtn = document.getElementById('desktop-theme-toggle-btn');
+        const desktopThemeIcon = document.getElementById('desktop-theme-icon');
+        const mobileThemeToggle = document.getElementById('mobile-theme-toggle');
+        const mobileThemeIcon = document.getElementById('mobile-theme-icon');
+        const htmlElement = document.documentElement;
+        const mobileRtlToggle = document.getElementById('mobile-rtl-toggle');
+        const desktopRtlToggleBtn = document.getElementById('desktop-rtl-toggle-btn');
+        
+        // Initialize Theme
+        const currentTheme = localStorage.getItem('theme') || 'light';
+        htmlElement.setAttribute('data-theme', currentTheme);
+        if (currentTheme === 'dark') {
+            htmlElement.classList.add('dark');
+            if (desktopThemeIcon) desktopThemeIcon.className = 'fas fa-sun';
+            if (mobileThemeIcon) mobileThemeIcon.className = 'fas fa-sun';
+        }
+
+        function toggleTheme() {
+            const isDark = htmlElement.getAttribute('data-theme') === 'dark';
+            const newTheme = isDark ? 'light' : 'dark';
+            
+            htmlElement.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+            
+            if (newTheme === 'dark') {
+                htmlElement.classList.add('dark');
+            } else {
+                htmlElement.classList.remove('dark');
+            }
+            
+            if (desktopThemeIcon) desktopThemeIcon.className = newTheme === 'dark' ? 'fas fa-sun' : 'fas fa-circle-half-stroke';
+            if (mobileThemeIcon) mobileThemeIcon.className = newTheme === 'dark' ? 'fas fa-sun' : 'fas fa-circle-half-stroke';
+            
+            window.dispatchEvent(new Event('resize'));
+        }
+
+        if (desktopThemeToggleBtn) desktopThemeToggleBtn.addEventListener('click', toggleTheme);
+        if (mobileThemeToggle) mobileThemeToggle.addEventListener('click', toggleTheme);
+        
+        // Desktop RTL Toggle
+        const currentDir = localStorage.getItem('direction') || 'ltr';
+        htmlElement.setAttribute('dir', currentDir);
+        
+        function toggleRTL() {
+            const direction = htmlElement.getAttribute('dir') === 'rtl' ? 'ltr' : 'rtl';
+            htmlElement.setAttribute('dir', direction);
+            localStorage.setItem('direction', direction);
+        }
+        if (desktopRtlToggleBtn) desktopRtlToggleBtn.addEventListener('click', toggleRTL);
+        if (mobileRtlToggle) mobileRtlToggle.addEventListener('click', toggleRTL);
+
+        // --- DROPDOWNS & MENU ---
+        function toggleDesktopDropdown(id) {
+            document.querySelectorAll('.dropdown').forEach(d => {
+                if(d.id !== id) d.classList.remove('active');
+            });
+            document.getElementById(id).classList.toggle('active');
+        }
+        
+        function toggleMobileDropdown(id) {
+            document.getElementById(id).classList.toggle('active');
+        }
+
+        document.addEventListener('click', (e) => {
+            if (!e.target.closest('.dropdown')) {
+                document.querySelectorAll('.dropdown').forEach(d => d.classList.remove('active'));
+            }
+        });
+
+        // Mobile Menu
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const closeMobileMenu = document.getElementById('close-mobile-menu');
+
+        if(mobileMenuBtn) {
+            mobileMenuBtn.addEventListener('click', () => {
+                mobileMenu.classList.add('active');
+            });
+        }
+        if(closeMobileMenu) {
+            closeMobileMenu.addEventListener('click', () => {
+                mobileMenu.classList.remove('active');
+            });
+        }
+
+        // Active Link Highlighting
+        const currentPath = window.location.pathname.split('/').pop() || 'index.html';
+        
+        document.querySelectorAll('.nav-link, .dropdown-item').forEach(link => {
+            if (link.getAttribute('href') === 'index.html' || currentPath === 'index.html') {
+                if (link.getAttribute('href') === 'index.html') {
+                    link.classList.add('active');
+                    const parent = link.closest('.dropdown');
+                    if (parent) parent.querySelector('.nav-link')?.classList.add('active');
+                }
+            } else {
+                link.classList.remove('active');
+            }
+        });
+
+        // --- SMOOTH SCROLL & OFFSET ---
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                const targetId = this.getAttribute('href');
+                if(targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    e.preventDefault();
+                    mobileMenu.classList.remove('active'); 
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 70, 
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        // --- SCROLL TOP BUTTON ---
+        const scrollTopBtn = document.getElementById('scroll-top');
+        window.addEventListener('scroll', () => {
+            scrollTopBtn.classList.toggle('hidden', window.scrollY <= 300);
+        });
+        scrollTopBtn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+        
+        window.addEventListener('resize', () => {
+            if(window.innerWidth >= 1280) mobileMenu.classList.remove('active');
+        });
+
+        // --- BEFORE / AFTER SLIDER LOGIC ---
+        const comparisonSlider = document.getElementById('comparison-slider');
+        const beforeImageContainer = document.getElementById('before-image-container');
+        const beforeImgInner = document.getElementById('before-img-inner');
+        const sliderHandle = document.getElementById('slider-handle');
+
+        function updateSlider() {
+            const val = comparisonSlider.value;
+            beforeImageContainer.style.width = val + "%";
+            sliderHandle.style.left = val + "%";
+        }
+
+        function setInnerImageWidth() {
+            if(beforeImgInner && beforeImgInner.parentElement.parentElement) {
+                const parentWidth = beforeImgInner.parentElement.parentElement.offsetWidth;
+                beforeImgInner.style.width = parentWidth + 'px';
+            }
+        }
+
+        if(comparisonSlider) {
+            comparisonSlider.addEventListener('input', updateSlider);
+            window.addEventListener('resize', setInnerImageWidth);
+            updateSlider();
+            setInnerImageWidth();
+            setTimeout(setInnerImageWidth, 100);
+        }
+    </script>
+</body>
+</html>

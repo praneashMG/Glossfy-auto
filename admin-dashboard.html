@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+<html lang="en" class="dark" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - Glossify Auto Premium</title>
+    <link rel="icon" type="image/jpeg" href="Images/growwpark_logo.jpg">
+
+    <meta name="description" content="Admin Dashboard for Glossify Auto - Premium Mobile Car Detailing">
+
+    <script src="tailwind.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            darkMode: 'class', 
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        accent: '#DC2626', // Glossify Red
+                        // Dark Theme Colors (Glossify Strict Black/Charcoal)
+                        'dark-base': '#000000',     // Pure Black Background
+                        'dark-surface': '#1F2937',  // Charcoal Cards
+                        'dark-text': '#E5E7EB',     // Light Grey Text
+                        // Light Theme Colors
+                        'light-base': '#F3F4F6',    // Light Gray Background
+                        'light-surface': '#FFFFFF', // White Cards
+                        'light-text': '#1F2937',    // Charcoal Text
+                        'light-border': '#E5E7EB',  // Light Border
+                    },
+                    animation: {
+                        'fadeInUp': 'fadeInUp 0.4s ease-out forwards',
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <style type="text/tailwindcss">
+        @layer components {
+            .sidebar-link {
+                @apply flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-semibold transition-all duration-300 text-light-text/70 dark:text-dark-text/70 hover:bg-light-base dark:hover:bg-dark-surface/80 hover:text-accent dark:hover:text-accent border-l-4 border-transparent cursor-pointer;
+            }
+            .sidebar-link.active {
+                @apply bg-light-surface dark:bg-dark-surface shadow-sm text-accent border-l-4 border-accent;
+            }
+            .stat-card {
+                @apply bg-light-surface dark:bg-dark-surface p-6 rounded-2xl shadow-lg border border-light-border dark:border-white/5 transition-transform duration-300 hover:-translate-y-1 hover:shadow-xl border-t-4 border-t-accent;
+            }
+            .action-btn {
+                @apply bg-accent hover:bg-accent/90 text-white py-2 px-6 rounded-lg font-bold text-xs transition-all duration-300 shadow-md transform hover:-translate-y-0.5 inline-flex items-center justify-center;
+            }
+            .card-section {
+                @apply bg-light-surface dark:bg-dark-surface rounded-2xl shadow-lg border border-light-border dark:border-white/5 p-6;
+            }
+        }
+    </style>
+    
+    <style>
+        /* BASE STYLES */
+        html, body {
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            overflow: hidden; 
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(15px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .animate-fade-in-up {
+            animation: fadeInUp 0.4s ease-out forwards;
+        }
+
+        /* Custom Scrollbar - Red Accent */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: #DC2626; border-radius: 10px; }
+    </style>
+</head>
+<body class="font-sans flex flex-col h-screen bg-light-base dark:bg-dark-base text-light-text dark:text-dark-text transition-colors duration-300">
+
+    <nav class="bg-white dark:bg-[#111827] shadow-md flex-shrink-0 relative z-50 h-20 border-b border-light-border dark:border-white/10 transition-colors duration-300">
+        <div class="max-w-[1600px] mx-auto px-4 sm:px-6 h-full flex justify-between items-center">
+            
+            <div class="flex items-center gap-2 sm:gap-4">
+                <button id="mobileMenuBtn" class="md:hidden text-light-text dark:text-[#EAE0D5] hover:text-accent transition-colors text-xl font-bold leading-none border-0 bg-transparent cursor-pointer">
+                    <i class="fas fa-bars"></i>
+                </button>
+
+                <a href="index.html" class="flex items-center gap-3 no-underline transition-transform duration-300 hover:scale-105 group">
+                    <div class="relative w-10 h-10 bg-black dark:bg-black rounded-lg flex items-center justify-center shrink-0 border-2 border-accent overflow-hidden transition-colors shadow-md">
+                        <i class="fas fa-car text-white text-lg transform group-hover:scale-110 transition-transform duration-300"></i>
+                    </div>
+                    <div class="flex flex-col justify-center">
+                        <span class="text-xl md:text-2xl font-black text-light-text dark:text-white leading-none tracking-tight whitespace-nowrap">Glossify<span class="text-accent">Auto</span></span>
+                    </div>
+                </a>
+            </div>
+
+            <div class="flex items-center gap-2 sm:gap-3 md:gap-5">
+                <div class="flex items-center gap-1 sm:gap-2 ltr:mr-2 rtl:ml-2 border-r border-light-border dark:border-white/20 ltr:pr-2 sm:ltr:pr-4 rtl:pl-2 sm:rtl:pl-4">
+                    <button class="w-8 h-8 sm:w-10 sm:h-10 bg-light-base dark:bg-white/10 rounded-lg flex items-center justify-center text-light-text dark:text-[#EAE0D5] transition-all duration-300 hover:bg-accent hover:text-white shrink-0 border-0 shadow-sm cursor-pointer" id="theme-toggle-btn" title="Toggle Dark Mode">
+                        <i class="fas fa-circle-half-stroke sm:text-lg" id="theme-icon"></i>
+                    </button>
+                    <button class="w-8 h-8 sm:w-10 sm:h-10 bg-light-base dark:bg-white/10 rounded-lg flex items-center justify-center text-light-text dark:text-[#EAE0D5] transition-all duration-300 hover:bg-accent hover:text-white shrink-0 border-0 shadow-sm cursor-pointer" id="rtl-toggle-btn" title="Toggle RTL">
+                        <i class="fas fa-right-left text-sm sm:text-base"></i>
+                    </button>
+                </div>
+
+                <div class="flex items-center gap-2 sm:gap-3 cursor-pointer group">
+                    <div class="ltr:text-right rtl:text-left hidden lg:block">
+                        <p class="text-xs font-bold text-light-text dark:text-[#EAE0D5] leading-tight">System Admin</p>
+                        <p class="text-[10px] text-accent">Superuser</p>
+                    </div>
+                    <div class="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-accent text-white flex items-center justify-center font-black text-xs sm:text-sm md:text-lg border-2 border-transparent transition-colors shadow-md">
+                        SA
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="flex flex-1 overflow-hidden relative">
+        
+        <aside id="sidebar" class="w-64 bg-light-surface dark:bg-dark-surface border-r border-light-border dark:border-white/10 flex-shrink-0 flex flex-col transition-transform duration-300 absolute md:relative z-40 h-full ltr:-translate-x-full ltr:md:translate-x-0 rtl:translate-x-full rtl:md:translate-x-0 shadow-2xl md:shadow-none">
+            <div class="p-5 flex-1 overflow-y-auto space-y-1">
+                <p class="text-[10px] font-black text-light-text/50 dark:text-dark-text/50 uppercase tracking-wider mb-3 ltr:ml-4 rtl:mr-4">Management</p>
+                
+                <a class="sidebar-link active" onclick="switchTab(event, 'all')">
+                    <i class="fas fa-home w-5 text-center"></i> Dashboard
+                </a>
+                <a class="sidebar-link" onclick="switchTab(event, 'section-overview')">
+                    <i class="fas fa-chart-line w-5 text-center"></i> Overview
+                </a>
+                <a class="sidebar-link" onclick="switchTab(event, 'section-inventory')">
+                    <i class="fas fa-boxes-stacked w-5 text-center"></i> Supplies & Gear
+                </a>
+                <a class="sidebar-link" onclick="switchTab(event, 'section-orders')">
+                    <i class="fas fa-calendar-alt w-5 text-center"></i> Appointments
+                </a>
+                
+                <div class="my-6 border-t border-light-border dark:border-white/10"></div>
+                
+                <p class="text-[10px] font-black text-light-text/50 dark:text-dark-text/50 uppercase tracking-wider mb-3 ltr:ml-4 rtl:mr-4">System</p>
+                <a class="sidebar-link" onclick="switchTab(event, 'section-settings')">
+                    <i class="fas fa-cog w-5 text-center"></i> Settings
+                </a>
+                
+                <a href="login.html" class="sidebar-link text-red-500 hover:text-red-600 dark:hover:text-red-400 hover:bg-red-50 dark:hover:bg-red-500/10 font-bold mt-4 border-none no-underline">
+                    <i class="fas fa-sign-out-alt w-5 text-center ltr:rotate-0 rtl:rotate-180"></i>
+                    Logout
+                </a>
+            </div>
+
+            <div class="p-5 m-4 bg-light-base dark:bg-dark-base rounded-xl border border-light-border dark:border-white/5 relative overflow-hidden group shadow-inner">
+                <div class="flex items-center gap-2 mb-2">
+                    <div class="w-2 h-2 rounded-full bg-green-500 animate-pulse"></div>
+                    <h4 class="text-light-text dark:text-dark-text text-xs font-bold">Fleet Status</h4>
+                </div>
+                <p class="text-[10px] text-light-text/60 dark:text-dark-text/60">All mobile units operational. Next dispatch: 15 mins.</p>
+            </div>
+        </aside>
+
+        <div id="sidebarOverlay" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-30 hidden md:hidden"></div>
+
+        <main class="flex-1 overflow-y-auto p-4 md:p-8 relative">
+            <div class="max-w-6xl mx-auto pb-12 space-y-12">
+                
+                <div id="section-overview" class="page-section block animate-fade-in-up space-y-8">
+                    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 border-b border-light-border dark:border-white/10 pb-4">
+                        <div>
+                            <h1 class="text-2xl md:text-3xl font-black text-light-text dark:text-dark-text tracking-tight">
+                                Admin Overview
+                            </h1>
+                            <p class="text-light-text/60 dark:text-dark-text/60 text-xs md:text-sm mt-1">Real-time performance metrics and dispatch control panel.</p>
+                        </div>
+                        <button class="action-btn">
+                            Generate Report
+                        </button>
+                    </div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                        <div class="stat-card">
+                            <div class="flex justify-between items-start mb-4">
+                                <div class="text-accent text-xs font-black bg-accent/10 px-3 py-1 rounded border border-accent/20">REV</div>
+                                <span class="bg-green-100 dark:bg-green-900/30 text-green-600 dark:text-green-400 border border-green-200 dark:border-green-800 text-[10px] font-bold px-2 py-1 rounded-full">+14.2%</span>
+                            </div>
+                            <h3 class="text-light-text/60 dark:text-dark-text/60 text-xs font-bold uppercase tracking-wider mb-1">Total Revenue</h3>
+                            <p class="text-2xl font-black text-light-text dark:text-dark-text">$18,450 <span class="text-sm font-medium text-light-text/50 dark:text-dark-text/50">USD</span></p>
+                        </div>
+
+                        <div class="stat-card">
+                            <div class="flex justify-between items-start mb-4">
+                                <div class="text-blue-600 dark:text-blue-400 text-xs font-black bg-blue-100 dark:bg-blue-900/30 px-3 py-1 rounded border border-blue-200 dark:border-blue-800">APPTS</div>
+                                <span class="bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 border border-blue-200 dark:border-blue-800 text-[10px] font-bold px-2 py-1 rounded-full">24 Active</span>
+                            </div>
+                            <h3 class="text-light-text/60 dark:text-dark-text/60 text-xs font-bold uppercase tracking-wider mb-1">Bookings Today</h3>
+                            <p class="text-2xl font-black text-light-text dark:text-dark-text">38 <span class="text-sm font-medium text-light-text/50 dark:text-dark-text/50">total</span></p>
+                        </div>
+
+                        <div class="stat-card">
+                            <div class="flex justify-between items-start mb-4">
+                                <div class="text-red-600 dark:text-red-400 text-xs font-black bg-red-100 dark:bg-red-900/30 px-3 py-1 rounded border border-red-200 dark:border-red-800">ALR</div>
+                                <span class="bg-red-100 dark:bg-red-900/30 text-red-600 dark:text-red-400 border border-red-200 dark:border-red-800 text-[10px] font-bold px-2 py-1 rounded-full">Action Req</span>
+                            </div>
+                            <h3 class="text-light-text/60 dark:text-dark-text/60 text-xs font-bold uppercase tracking-wider mb-1">Supply Alerts</h3>
+                            <p class="text-2xl font-black text-light-text dark:text-dark-text">2 <span class="text-sm font-medium text-light-text/50 dark:text-dark-text/50">items low</span></p>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="section-inventory" class="page-section block animate-fade-in-up space-y-6">
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                        
+                        <div class="card-section">
+                            <div class="flex justify-between items-center mb-6">
+                                <h2 class="text-lg font-black text-light-text dark:text-dark-text">Chemical & Gear Stock</h2>
+                                <button class="text-[10px] font-bold text-accent uppercase tracking-wider border border-accent px-3 py-1 rounded hover:bg-accent hover:text-white transition-colors">Manage Stock</button>
+                            </div>
+                            <div class="space-y-5">
+                                <div>
+                                    <div class="flex justify-between text-xs font-bold text-light-text dark:text-dark-text mb-2">
+                                        <span>9H Ceramic Coating (50ml)</span>
+                                        <span class="text-red-500">4 bottles left</span>
+                                    </div>
+                                    <div class="w-full bg-light-base dark:bg-dark-base rounded-full h-1.5 border border-light-border dark:border-white/5">
+                                        <div class="bg-red-500 h-1.5 rounded-full" style="width: 10%"></div>
+                                    </div>
+                                </div>
+                                <div>
+                                    <div class="flex justify-between text-xs font-bold text-light-text dark:text-dark-text mb-2">
+                                        <span>Premium Microfiber Towels</span>
+                                        <span class="text-orange-500">150 units left</span>
+                                    </div>
+                                    <div class="w-full bg-light-base dark:bg-dark-base rounded-full h-1.5 border border-light-border dark:border-white/5">
+                                        <div class="bg-orange-500 h-1.5 rounded-full" style="width: 25%"></div>
+                                    </div>
+                                </div>
+                                <div>
+                                    <div class="flex justify-between text-xs font-bold text-light-text dark:text-dark-text mb-2">
+                                        <span>Citrus Snow Foam (1 Gal)</span>
+                                        <span class="text-accent">28 jugs left</span>
+                                    </div>
+                                    <div class="w-full bg-light-base dark:bg-dark-base rounded-full h-1.5 border border-light-border dark:border-white/5">
+                                        <div class="bg-accent h-1.5 rounded-full shadow-[0_0_8px_rgba(220,38,38,0.4)]" style="width: 45%"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card-section">
+                            <h2 class="text-lg font-black text-light-text dark:text-dark-text mb-6">Top Performing Packages</h2>
+                            <div class="flex flex-col gap-4">
+                                <div class="flex items-center justify-between p-3 rounded-lg border border-light-border dark:border-white/10 hover:border-accent dark:hover:border-accent transition-colors">
+                                    <div class="flex items-center gap-3">
+                                        <div class="w-8 h-8 rounded bg-accent/10 flex items-center justify-center text-accent text-[10px] font-black border border-accent/20">#1</div>
+                                        <div>
+                                            <p class="text-sm font-bold text-light-text dark:text-dark-text">The Perfectionist (Sub)</p>
+                                            <p class="text-[10px] text-light-text/60 dark:text-dark-text/60">120 active members</p>
+                                        </div>
+                                    </div>
+                                    <div class="text-right">
+                                        <p class="text-sm font-bold text-light-text dark:text-dark-text">$18,000/mo</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="flex items-center justify-between p-3 rounded-lg border border-light-border dark:border-white/10 hover:border-accent dark:hover:border-accent transition-colors">
+                                    <div class="flex items-center gap-3">
+                                        <div class="w-8 h-8 rounded bg-light-base dark:bg-dark-base flex items-center justify-center text-light-text/70 dark:text-dark-text/70 text-[10px] font-black border border-light-border dark:border-white/10">#2</div>
+                                        <div>
+                                            <p class="text-sm font-bold text-light-text dark:text-dark-text">9H Ceramic Installation</p>
+                                            <p class="text-[10px] text-light-text/60 dark:text-dark-text/60">42 bookings this month</p>
+                                        </div>
+                                    </div>
+                                    <div class="text-right">
+                                        <p class="text-sm font-bold text-light-text dark:text-dark-text">$35,700</p>
+                                    </div>
+                                </div>
+
+                                <div class="flex items-center justify-between p-3 rounded-lg border border-light-border dark:border-white/10 hover:border-accent dark:hover:border-accent transition-colors">
+                                    <div class="flex items-center gap-3">
+                                        <div class="w-8 h-8 rounded bg-light-base dark:bg-dark-base flex items-center justify-center text-light-text/70 dark:text-dark-text/70 text-[10px] font-black border border-light-border dark:border-white/10">#3</div>
+                                        <div>
+                                            <p class="text-sm font-bold text-light-text dark:text-dark-text">Interior Restoration</p>
+                                            <p class="text-[10px] text-light-text/60 dark:text-dark-text/60">85 bookings this month</p>
+                                        </div>
+                                    </div>
+                                    <div class="text-right">
+                                        <p class="text-sm font-bold text-light-text dark:text-dark-text">$18,700</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="section-orders" class="page-section block animate-fade-in-up space-y-6">
+                    <div class="card-section p-0 overflow-hidden">
+                        <div class="p-6 border-b border-light-border dark:border-white/10 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+                            <h2 class="text-lg font-black text-light-text dark:text-dark-text">Live Appointments</h2>
+                            
+                            <div class="flex items-center gap-2">
+                                <button class="text-[10px] font-bold px-3 py-1.5 rounded-full bg-accent text-white border-0 cursor-pointer">All</button>
+                                <button class="text-[10px] font-bold px-3 py-1.5 rounded-full bg-light-base dark:bg-dark-base text-light-text/70 dark:text-dark-text/70 hover:text-accent dark:hover:text-accent border border-light-border dark:border-white/10 cursor-pointer transition-colors">Pending</button>
+                                <button class="text-[10px] font-bold px-3 py-1.5 rounded-full bg-light-base dark:bg-dark-base text-light-text/70 dark:text-dark-text/70 hover:text-accent dark:hover:text-accent border border-light-border dark:border-white/10 cursor-pointer transition-colors">In Progress</button>
+                            </div>
+                        </div>
+                        
+                        <div class="overflow-x-auto">
+                            <table class="w-full text-left border-collapse">
+                                <thead>
+                                    <tr class="bg-light-base dark:bg-dark-base/50">
+                                        <th class="px-6 py-4 text-[10px] font-black text-light-text/50 dark:text-dark-text/50 uppercase tracking-wider">Booking ID</th>
+                                        <th class="px-6 py-4 text-[10px] font-black text-light-text/50 dark:text-dark-text/50 uppercase tracking-wider">Client & Vehicle</th>
+                                        <th class="px-6 py-4 text-[10px] font-black text-light-text/50 dark:text-dark-text/50 uppercase tracking-wider">Status</th>
+                                        <th class="px-6 py-4 text-[10px] font-black text-light-text/50 dark:text-dark-text/50 uppercase tracking-wider">Value</th>
+                                        <th class="px-6 py-4 text-[10px] font-black text-light-text/50 dark:text-dark-text/50 uppercase tracking-wider ltr:text-right rtl:text-left">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="divide-y divide-light-border dark:divide-white/5">
+                                    <tr class="hover:bg-light-base dark:hover:bg-dark-base/50 transition-colors group">
+                                        <td class="px-6 py-4 text-xs font-medium text-light-text/80 dark:text-dark-text/80">#GL-9012</td>
+                                        <td class="px-6 py-4">
+                                            <div class="flex items-center gap-3">
+                                                <div class="w-8 h-8 rounded-full bg-accent/10 flex items-center justify-center text-accent text-[10px] font-black border border-accent/20">SJ</div>
+                                                <div>
+                                                    <p class="text-xs font-bold text-light-text dark:text-dark-text">Sarah Jenkins</p>
+                                                    <p class="text-[10px] text-light-text/60 dark:text-dark-text/60">Range Rover Sport</p>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td class="px-6 py-4">
+                                            <span class="inline-flex items-center px-2.5 py-1 rounded-full text-[10px] font-bold bg-orange-100 text-orange-700 dark:bg-orange-900/30 dark:text-orange-400 border border-orange-200 dark:border-orange-800">
+                                                Unassigned
+                                            </span>
+                                        </td>
+                                        <td class="px-6 py-4 text-xs font-bold text-light-text dark:text-dark-text">$250.00</td>
+                                        <td class="px-6 py-4 ltr:text-right rtl:text-left">
+                                            <button class="text-[10px] bg-accent text-white px-3 py-1.5 rounded font-bold hover:opacity-90 transition-opacity shadow-sm border-0 cursor-pointer">Assign Detailer</button>
+                                        </td>
+                                    </tr>
+                                    
+                                    <tr class="hover:bg-light-base dark:hover:bg-dark-base/50 transition-colors group">
+                                        <td class="px-6 py-4 text-xs font-medium text-light-text/80 dark:text-dark-text/80">#GL-9011</td>
+                                        <td class="px-6 py-4">
+                                            <div class="flex items-center gap-3">
+                                                <div class="w-8 h-8 rounded-full bg-light-surface dark:bg-dark-surface flex items-center justify-center text-light-text/70 dark:text-dark-text/70 text-[10px] font-black border border-light-border dark:border-white/10">MK</div>
+                                                <div>
+                                                    <p class="text-xs font-bold text-light-text dark:text-dark-text">Marcus King</p>
+                                                    <p class="text-[10px] text-light-text/60 dark:text-dark-text/60">BMW M3 (Ceramic)</p>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td class="px-6 py-4">
+                                            <span class="inline-flex items-center px-2.5 py-1 rounded-full text-[10px] font-bold bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-400 border border-blue-200 dark:border-blue-800">
+                                                In Progress
+                                            </span>
+                                        </td>
+                                        <td class="px-6 py-4 text-xs font-bold text-light-text dark:text-dark-text">$850.00</td>
+                                        <td class="px-6 py-4 ltr:text-right rtl:text-left">
+                                            <button class="text-[10px] border border-light-border dark:border-white/20 text-light-text dark:text-dark-text px-3 py-1.5 rounded font-bold hover:bg-light-base dark:hover:bg-dark-base transition-colors cursor-pointer">Mark Complete</button>
+                                        </td>
+                                    </tr>
+
+                                    <tr class="hover:bg-light-base dark:hover:bg-dark-base/50 transition-colors group">
+                                        <td class="px-6 py-4 text-xs font-medium text-light-text/80 dark:text-dark-text/80">#GL-9010</td>
+                                        <td class="px-6 py-4">
+                                            <div class="flex items-center gap-3">
+                                                <div class="w-8 h-8 rounded-full bg-light-surface dark:bg-dark-surface flex items-center justify-center text-light-text/70 dark:text-dark-text/70 text-[10px] font-black border border-light-border dark:border-white/10">AR</div>
+                                                <div>
+                                                    <p class="text-xs font-bold text-light-text dark:text-dark-text">Alex Rivera</p>
+                                                    <p class="text-[10px] text-light-text/60 dark:text-dark-text/60">Porsche 911 (Maint)</p>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td class="px-6 py-4">
+                                            <span class="inline-flex items-center px-2.5 py-1 rounded-full text-[10px] font-bold bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400 border border-green-200 dark:border-green-800">
+                                                Completed
+                                            </span>
+                                        </td>
+                                        <td class="px-6 py-4 text-xs font-bold text-light-text dark:text-dark-text">$150.00</td>
+                                        <td class="px-6 py-4 ltr:text-right rtl:text-left">
+                                            <button class="text-[10px] text-light-text/60 dark:text-dark-text/60 px-3 py-1.5 hover:text-accent dark:hover:text-accent font-bold transition-colors border-0 bg-transparent cursor-pointer">View Details</button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="section-settings" class="page-section block animate-fade-in-up space-y-6">
+                    <h2 class="text-xl md:text-2xl font-black text-light-text dark:text-dark-text tracking-tight">System Settings</h2>
+                    
+                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                        
+                        <div class="card-section lg:col-span-2 space-y-6">
+                            <div class="flex justify-between items-center border-b border-light-border dark:border-white/10 pb-4">
+                                <h3 class="text-lg font-bold text-light-text dark:text-dark-text">Operational Preferences</h3>
+                            </div>
+                            
+                            <div class="space-y-5">
+                                <label class="flex items-center justify-between cursor-pointer group">
+                                    <div class="flex flex-col">
+                                        <span class="text-sm font-bold text-light-text dark:text-dark-text">Auto-Dispatch System</span>
+                                        <span class="text-[10px] text-light-text/60 dark:text-dark-text/60">Automatically assign available detailers to new bookings based on location.</span>
+                                    </div>
+                                    <input type="checkbox" checked class="w-5 h-5 text-accent bg-light-base dark:bg-dark-base border-light-border dark:border-white/20 rounded focus:ring-accent focus:ring-2 cursor-pointer transition-colors">
+                                </label>
+
+                                <label class="flex items-center justify-between cursor-pointer group">
+                                    <div class="flex flex-col">
+                                        <span class="text-sm font-bold text-light-text dark:text-dark-text">Dynamic Surge Pricing</span>
+                                        <span class="text-[10px] text-light-text/60 dark:text-dark-text/60">Apply a 1.5x multiplier during high-demand weekends and holidays.</span>
+                                    </div>
+                                    <input type="checkbox" class="w-5 h-5 text-accent bg-light-base dark:bg-dark-base border-light-border dark:border-white/20 rounded focus:ring-accent focus:ring-2 cursor-pointer transition-colors">
+                                </label>
+
+                                <label class="flex items-center justify-between cursor-pointer group">
+                                    <div class="flex flex-col">
+                                        <span class="text-sm font-bold text-light-text dark:text-dark-text">Require Upfront Deposits</span>
+                                        <span class="text-[10px] text-light-text/60 dark:text-dark-text/60">Require a 20% non-refundable deposit for all Ceramic Coating packages.</span>
+                                    </div>
+                                    <input type="checkbox" checked class="w-5 h-5 text-accent bg-light-base dark:bg-dark-base border-light-border dark:border-white/20 rounded focus:ring-accent focus:ring-2 cursor-pointer transition-colors">
+                                </label>
+                            </div>
+                            
+                            <div class="pt-4 border-t border-light-border dark:border-white/10">
+                                <h4 class="text-sm font-bold text-light-text dark:text-dark-text mb-3">Service Zones</h4>
+                                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                    <div class="bg-light-base dark:bg-dark-base border border-light-border dark:border-white/10 p-3 rounded-lg flex justify-between items-center">
+                                        <span class="text-xs font-bold text-light-text dark:text-dark-text">Downtown Metro</span>
+                                        <span class="text-[10px] bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400 px-2 py-0.5 rounded font-bold">Active</span>
+                                    </div>
+                                    <div class="bg-light-base dark:bg-dark-base border border-light-border dark:border-white/10 p-3 rounded-lg flex justify-between items-center">
+                                        <span class="text-xs font-bold text-light-text dark:text-dark-text">North Suburbs</span>
+                                        <span class="text-[10px] bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400 px-2 py-0.5 rounded font-bold">Active</span>
+                                    </div>
+                                    <div class="bg-light-base dark:bg-dark-base border border-light-border dark:border-white/10 p-3 rounded-lg flex justify-between items-center opacity-60">
+                                        <span class="text-xs font-bold text-light-text dark:text-dark-text">West Valley</span>
+                                        <span class="text-[10px] bg-light-surface dark:bg-dark-surface border border-light-border dark:border-white/10 text-light-text/60 dark:text-dark-text/60 px-2 py-0.5 rounded font-bold">Inactive</span>
+                                    </div>
+                                    <button class="border-2 border-dashed border-light-border dark:border-white/20 text-xs font-bold text-light-text/70 dark:text-dark-text/70 rounded-lg hover:border-accent hover:text-accent transition-colors p-3 flex justify-center items-center gap-2 cursor-pointer bg-transparent">
+                                        <i class="fas fa-plus"></i> Add Zone
+                                    </button>
+                                </div>
+                            </div>
+
+                            <div class="pt-2">
+                                <button class="action-btn">Save Configurations</button>
+                            </div>
+                        </div>
+
+                        <div class="space-y-6 lg:col-span-1">
+                            <div class="card-section space-y-5">
+                                <h3 class="text-lg font-bold text-light-text dark:text-dark-text border-b border-light-border dark:border-white/10 pb-3">Admin Security</h3>
+                                
+                                <label class="flex items-center justify-between cursor-pointer group">
+                                    <div class="flex flex-col">
+                                        <span class="text-sm font-bold text-light-text dark:text-dark-text">Enforce 2FA</span>
+                                        <span class="text-[10px] text-light-text/60 dark:text-dark-text/60">Require two-factor authentication for all staff accounts.</span>
+                                    </div>
+                                    <input type="checkbox" checked class="w-5 h-5 text-accent bg-light-base dark:bg-dark-base border-light-border dark:border-white/20 rounded focus:ring-accent focus:ring-2 cursor-pointer transition-colors">
+                                </label>
+                                
+                                <div>
+                                    <span class="block text-xs font-bold text-light-text/70 dark:text-dark-text/70 mb-2 uppercase tracking-wide">Session Timeout</span>
+                                    <select class="w-full bg-light-base dark:bg-dark-base border border-light-border dark:border-white/10 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:border-accent text-light-text dark:text-dark-text transition-colors appearance-none cursor-pointer">
+                                        <option value="15">15 Minutes</option>
+                                        <option value="30" selected>30 Minutes</option>
+                                        <option value="60">1 Hour</option>
+                                        <option value="never">Never</option>
+                                    </select>
+                                </div>
+
+                                <button class="w-full bg-light-base dark:bg-dark-base border border-light-border dark:border-white/10 hover:border-red-500 hover:text-red-500 text-light-text dark:text-dark-text font-bold text-xs py-2.5 rounded transition-colors mt-2 cursor-pointer">
+                                    Force Global Password Reset
+                                </button>
+                            </div>
+
+                            <div class="bg-accent/10 border border-accent/20 rounded-xl p-5 relative overflow-hidden group">
+                                <h4 class="text-accent text-sm font-bold mb-1">System Version</h4>
+                                <p class="text-[10px] text-light-text/70 dark:text-dark-text/70 mb-3">Glossify OS v2.4.1 is up to date.</p>
+                                <button class="text-xs text-accent font-bold hover:underline bg-transparent border-0 cursor-pointer p-0">View Changelog</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // --- 1. THEME TOGGLE LOGIC ---
+        const htmlElement = document.documentElement;
+        const themeToggleBtn = document.getElementById('theme-toggle-btn');
+        const themeIcon = document.getElementById('theme-icon');
+        
+        if (themeIcon) themeIcon.className = 'fas fa-circle-half-stroke sm:text-lg';
+
+        const currentTheme = localStorage.getItem('theme') || 'dark';
+        if (currentTheme === 'dark') {
+            htmlElement.classList.add('dark');
+        } else {
+            htmlElement.classList.remove('dark');
+        }
+
+        function toggleTheme() {
+            const isDark = htmlElement.classList.contains('dark');
+            
+            if (isDark) {
+                htmlElement.classList.remove('dark');
+                localStorage.setItem('theme', 'light');
+            } else {
+                htmlElement.classList.add('dark');
+                localStorage.setItem('theme', 'dark');
+            }
+        }
+        if (themeToggleBtn) themeToggleBtn.addEventListener('click', toggleTheme);
+
+        // --- 2. RTL TOGGLE LOGIC ---
+        const rtlToggleBtn = document.getElementById('rtl-toggle-btn');
+        const currentDir = localStorage.getItem('direction') || 'ltr';
+        htmlElement.setAttribute('dir', currentDir);
+        
+        function toggleRTL() {
+            const direction = htmlElement.getAttribute('dir') === 'rtl' ? 'ltr' : 'rtl';
+            htmlElement.setAttribute('dir', direction);
+            localStorage.setItem('direction', direction);
+        }
+        if (rtlToggleBtn) rtlToggleBtn.addEventListener('click', toggleRTL);
+
+        // --- 3. FILTER / TAB SWITCHING LOGIC ---
+        function switchTab(event, targetId) {
+            if(event) event.preventDefault();
+            const allSections = document.querySelectorAll('.page-section');
+
+            if (targetId === 'all') {
+                // Show all sections when "Dashboard" is clicked
+                allSections.forEach(section => {
+                    section.classList.remove('hidden');
+                    section.classList.add('block', 'animate-fade-in-up');
+                });
+            } else {
+                // Hide all, show only specific target
+                allSections.forEach(section => {
+                    section.classList.remove('block', 'animate-fade-in-up');
+                    section.classList.add('hidden');
+                    void section.offsetWidth; // reflow
+                });
+
+                const targetSection = document.getElementById(targetId);
+                if (targetSection) {
+                    targetSection.classList.remove('hidden');
+                    targetSection.classList.add('block', 'animate-fade-in-up');
+                }
+            }
+
+            // Update active state in sidebar
+            if (event && event.currentTarget.classList.contains('sidebar-link')) {
+                document.querySelectorAll('.sidebar-link').forEach(link => {
+                    link.classList.remove('active');
+                });
+                event.currentTarget.classList.add('active');
+            }
+
+            // Close mobile sidebar on link click
+            if (window.innerWidth < 768) {
+                const sidebar = document.getElementById('sidebar');
+                const sidebarOverlay = document.getElementById('sidebarOverlay');
+                if (htmlElement.getAttribute('dir') === 'rtl') {
+                    sidebar.classList.add('rtl:translate-x-full');
+                } else {
+                    sidebar.classList.add('ltr:-translate-x-full');
+                }
+                sidebarOverlay.classList.add('hidden');
+            }
+        }
+
+        // --- 4. MOBILE SIDEBAR LOGIC ---
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const sidebar = document.getElementById('sidebar');
+        const sidebarOverlay = document.getElementById('sidebarOverlay');
+
+        function toggleSidebar() {
+            const isRTL = htmlElement.getAttribute('dir') === 'rtl';
+            const closedClass = isRTL ? 'rtl:translate-x-full' : 'ltr:-translate-x-full';
+            
+            const isClosed = sidebar.classList.contains(closedClass);
+            
+            if (isClosed) {
+                sidebar.classList.remove(closedClass);
+                sidebarOverlay.classList.remove('hidden');
+            } else {
+                sidebar.classList.add(closedClass);
+                sidebarOverlay.classList.add('hidden');
+            }
+        }
+
+        if (mobileMenuBtn) mobileMenuBtn.addEventListener('click', toggleSidebar);
+        if (sidebarOverlay) sidebarOverlay.addEventListener('click', toggleSidebar);
+    </script>
+</body>
+</html>
